@@ -1,0 +1,26 @@
+{
+    "embed_dim": 512,
+    "vision_cfg": {
+        "image_size": 224,
+        "layers": 12,
+        "width": 768,
+        "patch_size": 16,
+        "kope_mode": true,
+        "enable_kope": true,
+        "kope_vo_rotation": true,
+        "kope_mix": true,
+        "kope_mix_init_gain": 0.1,
+        "kope_mix_phase_norm": true,
+        "checkpoint_rotation": false,
+        "kope_coupling_gamma": 0.05,
+        "kope_coupling_qknorm_learn": true,
+        "kope_base": 20
+    },
+    "text_cfg": {
+        "context_length": 77,
+        "vocab_size": 49408,
+        "width": 512,
+        "heads": 8,
+        "layers": 12
+    }
+}

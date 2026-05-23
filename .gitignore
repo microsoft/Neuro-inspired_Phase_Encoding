@@ -1,0 +1,80 @@
+# Python caches and build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Local environments
+.venv/
+venv/
+env/
+.env
+
+# Local experiment outputs
+outputs/
+results/
+saves/
+logs/
+wandb/
+runs/
+
+# Checkpoints and model weights should be distributed as release assets, not committed.
+checkpoints/
+checkpoints_release/
+*.pth
+*.pt
+*.ckpt
+
+# Local release-prep and smoke-test helpers.
+/_*.py
+/_*.txt
+
+# Internal job configs used during release preparation.
+/run_*.yaml
+/run_*.yml
+
+# VARC upstream does not publish an explicit license. Keep the full upstream
+# checkout local-only; publish only KoPE integration files that are intended to
+# be copied into an upstream VARC checkout.
+/VARC/*
+!/VARC/README.md
+!/VARC/src/
+/VARC/src/*
+!/VARC/src/ARC_ViT_EncDec.py
+!/VARC/src/ARC_ViT_KoPE_EncDec.py
+!/VARC/src/ARC_ViT_KoPE_EncDec_frompretrain.py
+!/VARC/utils/
+/VARC/utils/*
+!/VARC/utils/args.py
+!/VARC/utils/load_model.py
+
+# The segmentation configs vendor a small OpenMMLab config subset. Keep only
+# the dependency closure used by simdinov2/eval/mysegmentation/configs/*.
+/simdinov2/eval/mysegmentation/configs_mmdet/**
+!/simdinov2/eval/mysegmentation/configs_mmdet/
+!/simdinov2/eval/mysegmentation/configs_mmdet/_base_/
+!/simdinov2/eval/mysegmentation/configs_mmdet/_base_/datasets/
+!/simdinov2/eval/mysegmentation/configs_mmdet/_base_/datasets/coco_panoptic.py
+!/simdinov2/eval/mysegmentation/configs_mmdet/_base_/default_runtime.py
+!/simdinov2/eval/mysegmentation/configs_mmdet/mask2former/
+!/simdinov2/eval/mysegmentation/configs_mmdet/mask2former/mask2former_r50_8xb2-lsj-50e_coco-panoptic.py
+!/simdinov2/eval/mysegmentation/configs_mmdet/mask2former/mask2former_swin-t-p4-w7-224_8xb2-lsj-50e_coco-panoptic.py
+
+/simdinov2/eval/mysegmentation/configs_mmseg/**
+!/simdinov2/eval/mysegmentation/configs_mmseg/
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/datasets/
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/datasets/ade20k.py
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/default_runtime.py
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/models/
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/models/setr_pup.py
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/schedules/
+!/simdinov2/eval/mysegmentation/configs_mmseg/_base_/schedules/schedule_160k.py
+!/simdinov2/eval/mysegmentation/configs_mmseg/setr/
+!/simdinov2/eval/mysegmentation/configs_mmseg/setr/setr_vit-l_pup_8xb2-160k_ade20k-512x512.py
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/

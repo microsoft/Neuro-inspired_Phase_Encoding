@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json.schemastore.org/component-detection-manifest.json",
+  "version": 1,
+  "registrations": [
+    {
+      "component": {
+        "type": "git",
+        "git": {
+          "repositoryUrl": "https://github.com/RobinWu218/SimDINO",
+          "commitHash": "8149fc4ed8ee3fd97b7bde900447414e6669e71b"
+        }
+      },
+      "developmentDependency": false
+    },
+    {
+      "component": {
+        "type": "git",
+        "git": {
+          "repositoryUrl": "https://github.com/mlfoundations/open_clip",
+          "commitHash": "2896af3414c20a3e2b089cfed706d02f331ff737"
+        }
+      },
+      "developmentDependency": false
+    },
+    {
+      "component": {
+        "type": "git",
+        "git": {
+          "repositoryUrl": "https://github.com/lillian039/VARC",
+          "commitHash": "537b01ed95944cfb080455b795f4888db8d0484b"
+        }
+      },
+      "developmentDependency": false
+    },
+    {
+      "component": {
+        "type": "git",
+        "git": {
+          "repositoryUrl": "https://github.com/facebookresearch/deit",
+          "commitHash": "7e160fe43f0252d17191b71cbb5826254114ea5b"
+        }
+      },
+      "developmentDependency": false
+    },
+    {
+      "component": {
+        "type": "git",
+        "git": {
+          "repositoryUrl": "https://github.com/open-mmlab/mmdetection",
+          "commitHash": "44ebd17b145c2372c4b700bfb9cb20dbd28ab64a"
+        }
+      },
+      "developmentDependency": false
+    },
+    {
+      "component": {
+        "type": "git",
+        "git": {
+          "repositoryUrl": "https://github.com/open-mmlab/mmsegmentation",
+          "commitHash": "c685fe6767c4cadf6b051983ca6208f1b9d1ccb8"
+        }
+      },
+      "developmentDependency": false
+    }
+  ]
+}
