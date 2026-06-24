@@ -1,6 +1,6 @@
 --extra-index-url https://download.pytorch.org/whl/cu126
 
-torch==2.7.1
+torch==2.12.0+cu126
 torchvision==0.22.1
 xformers==0.0.31
 
