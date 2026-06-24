@@ -69,9 +69,9 @@ This release ships six ImageNet-1K checkpoints — three self-supervised (SimDIN
 
 | Model          | Patch | Resolution | Pre-train Epochs | #Params | Download  |
 | :------------- | :---: | :--------: | :--------------: | :-----: | :-------- |
-| ViT+KoPE-Small |  16  |    224    |       100       |  22 M  | [link](#) |
-| ViT+KoPE-Base  |  16  |    224    |       100       |  87 M  | [link](#) |
-| ViT+KoPE-Large |  16  |    224    |       100       |  306 M  | [link](#) |
+| ViT+KoPE-Small |  16  |    224    |       100       |  22 M  | [link](https://github.com/microsoft/Neuro-inspired_Phase_Encoding/releases/download/v1.0.0/simdinov2_vitkope_small_patch16_in1k_100e.zip) |
+| ViT+KoPE-Base  |  16  |    224    |       100       |  87 M  | [link](https://github.com/microsoft/Neuro-inspired_Phase_Encoding/releases/download/v1.0.0/simdinov2_vitkope_base_patch16_in1k_100e.zip) |
+| ViT+KoPE-Large |  16  |    224    |       100       |  306 M  | [link](https://github.com/microsoft/Neuro-inspired_Phase_Encoding/releases/download/v1.0.0/simdinov2_vitkope_large_patch16_in1k_100e.zip) |
 
 Each SSL release packages two files:
 
@@ -83,9 +83,9 @@ Each SSL release packages two files:
 
 | Model          | Patch | Resolution | Train Epochs | #Params | Download  |
 | :------------- | :---: | :--------: | :----------: | :-----: | :-------- |
-| ViT+KoPE-Small |  16  |    224    |     300     |  22 M  | [link](#) |
-| ViT+KoPE-Base  |  16  |    224    |     300     |  87 M  | [link](#) |
-| ViT+KoPE-Large |  16  |    224    |     300     |  306 M  | [link](#) |
+| ViT+KoPE-Small |  16  |    224    |     300     |  22 M  | [link](https://github.com/microsoft/Neuro-inspired_Phase_Encoding/releases/download/v1.0.0/supervised_vitkope_small_patch16_in1k_300e.zip) |
+| ViT+KoPE-Base  |  16  |    224    |     300     |  87 M  | [link](https://github.com/microsoft/Neuro-inspired_Phase_Encoding/releases/download/v1.0.0/supervised_vitkope_base_patch16_in1k_300e.zip) |
+| ViT+KoPE-Large |  16  |    224    |     300     |  306 M  | [link](https://github.com/microsoft/Neuro-inspired_Phase_Encoding/releases/download/v1.0.0/supervised_vitkope_large_patch16_in1k_300e.zip) |
 
 Each supervised release is a single `.pth` file with the structure `{"backbone": state_dict, "head": {"weight", "bias"}, "meta": {...}}`.
 
@@ -93,11 +93,11 @@ Each supervised release is a single `.pth` file with the structure `{"backbone":
 
 ### Supervised classification
 
-`simdinov2/supervised/eval/eval.py` auto-detects the release format (the `{backbone, head, meta}` dict layout) and reconstructs the classifier from `meta`. Point `--checkpoint` either at the released `.pth` file directly or at a folder that contains one:
+`simdinov2/supervised/eval/eval.py` auto-detects the checkpoint format (the `{backbone, head, meta}` dict layout) and reconstructs the classifier from `meta`. Point `--checkpoint` either at the released `.pth` file directly or at a folder that contains one:
 
 ```shell
 python simdinov2/supervised/eval/eval.py \
-  --checkpoint PATH_TO_RELEASE.pth \
+  --checkpoint PATH_TO_CHECKPOINT.pth \
   --imagenet-val PATH_TO_IMAGENET/val \
   --imagenet-v2 PATH_TO_IMAGENET_V2 \
   --output-json ./eval_results.json
@@ -113,8 +113,8 @@ k-NN classification example:
 
 ```shell
 torchrun --nproc_per_node=4 simdinov2/eval/knn.py \
-  --config-file PATH_TO_RELEASE/config.yaml \
-  --pretrained-weights PATH_TO_RELEASE/teacher_checkpoint.pth \
+  --config-file PATH_TO_CHECKPOINT_FOLDER/config.yaml \
+  --pretrained-weights PATH_TO_CHECKPOINT_FOLDER/teacher_checkpoint.pth \
   --output-dir ./eval_knn_base \
   --train-dataset ImageNet:split=TRAIN:root=PATH_TO_IMAGENET:extra=PATH_TO_IMAGENET_EXTRAS \
   --val-dataset   ImageNet:split=VAL:root=PATH_TO_IMAGENET:extra=PATH_TO_IMAGENET_EXTRAS
@@ -124,8 +124,8 @@ Linear probing example:
 
 ```shell
 torchrun --nproc_per_node=4 simdinov2/eval/linear.py \
-  --config-file PATH_TO_RELEASE/config.yaml \
-  --pretrained-weights PATH_TO_RELEASE/teacher_checkpoint.pth \
+  --config-file PATH_TO_CHECKPOINT_FOLDER/config.yaml \
+  --pretrained-weights PATH_TO_CHECKPOINT_FOLDER/teacher_checkpoint.pth \
   --output-dir ./eval_linear_base \
   --epochs 100 \
   --batch-size 256 \
@@ -137,12 +137,12 @@ Fine-tuning example:
 
 ```shell
 torchrun --nproc_per_node=4 simdinov2/eval/finetuning.py \
-  --config-file PATH_TO_RELEASE/config.yaml \
+  --config-file PATH_TO_CHECKPOINT_FOLDER/config.yaml \
   --arch-name vit \
   --net-type base \
   --batch-size 256 \
   --phase-coupling-lr-mult 0.5 \
-  --pretrained-weights PATH_TO_RELEASE/teacher_checkpoint.pth \
+  --pretrained-weights PATH_TO_CHECKPOINT_FOLDER/teacher_checkpoint.pth \
   --output-dir ./eval_finetune_base \
   --train-dataset ImageNet:split=TRAIN:root=PATH_TO_IMAGENET:extra=PATH_TO_IMAGENET_EXTRAS \
   --val-dataset   ImageNet:split=VAL:root=PATH_TO_IMAGENET:extra=PATH_TO_IMAGENET_EXTRAS
@@ -176,6 +176,7 @@ torchrun --standalone --nproc_per_node=4 simdinov2/supervised/train.py \
   --torch-compile --compile-mode default --persistent-workers \
   --output-dir ./results/supervised_vit_kope_base \
   --data-path PATH_TO_IMAGENET
+# lr=4e-3 for ViT-S; drop-path=0.05/0.2/0.45 for ViT-S/B/L; refer to DeiT-III repo
 
 python simdinov2/supervised/eval/eval.py \
   --checkpoint ./results/supervised_vit_kope_base \
@@ -199,7 +200,7 @@ torchrun --standalone --nproc_per_node=4 simdinov2/train/train.py \
     student.block=nested \
     student.block_type=nested \
     crops.local_crops_size=96 \
-    student.drop_path_rate=0.1 \
+    student.drop_path_rate=0.1 \ # 0.1 for ViT-S/B, 0.2 for ViT-L in our paper
     student.kope_gamma=0.05 \
     student.learn_phase_gamma=learn \
     student.coupling_qknorm=true \
@@ -216,7 +217,7 @@ torchrun --standalone --nproc_per_node=4 simdinov2/train/train.py \
     optim.layerwise_decay=0.9 \
     optim.phase_coupling_lr_mult=0.5 \
     optim.base_lr=4e-3 \
-    ibot.phase_loss_weight=0.0   # 1.0 for the large variant
+    ibot.phase_loss_weight=0.0   # 1.0 for ViT-L
 ```
 
 ### Semantic and panoptic segmentation
